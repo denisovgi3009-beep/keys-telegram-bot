@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    # секреты берём из .env (не попадает в образ — см. .dockerignore)
+    env_file: .env
+    restart: unless-stopped
+    # том, чтобы склад ключей (store.db) переживал перезапуск контейнера
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DB_PATH=/app/data/store.db
